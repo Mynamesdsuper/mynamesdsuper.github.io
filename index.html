@@ -1,134 +1,64 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>ContentFarm — TikTok Login</title>
+<title>Lyra — Auto-lyrics video generator</title>
 <style>
   :root { color-scheme: dark; }
   body {
     margin: 0;
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background: #0f0f12;
     color: #f2f2f5;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 24px;
     box-sizing: border-box;
   }
   .card {
-    max-width: 480px;
+    max-width: 560px;
     width: 100%;
     background: #1a1a1f;
     border: 1px solid #2a2a31;
     border-radius: 16px;
-    padding: 32px;
+    padding: 36px;
   }
-  h1 { font-size: 1.25rem; margin: 0 0 8px; }
-  p.hint { color: #9a9aa5; font-size: 0.9rem; margin: 0 0 20px; }
-  label { display: block; font-size: 0.8rem; color: #9a9aa5; margin-bottom: 6px; }
-  .field { margin-bottom: 16px; }
-  .row {
-    display: flex;
-    gap: 8px;
-  }
-  input[type=text] {
-    flex: 1;
-    background: #0f0f12;
-    border: 1px solid #2a2a31;
-    border-radius: 8px;
-    color: #f2f2f5;
-    padding: 10px 12px;
-    font-size: 0.85rem;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  }
-  button {
-    background: #4f7bff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 16px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  button:hover { background: #3d67e8; }
-  button:active { transform: translateY(1px); }
-  .error { color: #ff8080; font-size: 0.9rem; }
-  .copied { color: #7be08a; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  p.tagline { color: #9a9aa5; margin: 0 0 24px; }
+  p { line-height: 1.6; }
+  ul { line-height: 1.6; padding-left: 20px; }
+  .links { margin-top: 24px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .links a { color: #4f7bff; text-decoration: none; font-size: 0.9rem; }
+  .links a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
   <div class="card">
-    <h1>ContentFarm — Autorizzazione TikTok</h1>
-    <p class="hint">Copia il codice qui sotto e incollalo nella finestra di ContentFarm per completare il collegamento.</p>
-    <div id="content"></div>
+    <h1>Lyra</h1>
+    <p class="tagline">Generate short-form lyric edits and post them on your socials.</p>
+    <p>
+      Lyra (project codename for ContentFarm) is a personal, locally-run desktop application
+      that turns songs into audio-reactive short-form video reels with automatically
+      generated synced lyrics (auto-lyrics) and karaoke-style captions.
+    </p>
+    <p>Main features:</p>
+    <ul>
+      <li>Automatic speech-to-text transcription and lyric syncing from an audio track</li>
+      <li>Audio-reactive animations and customizable subtitle styles</li>
+      <li>Local rendering of the final video, ready to publish</li>
+      <li>Optional TikTok account connection to streamline publishing your renders</li>
+    </ul>
+    <p>
+      Lyra runs entirely on the user's own machine. It is not a hosted multi-user web service:
+      each user runs their own local instance and connects their own TikTok account.
+    </p>
+    <div class="links">
+      <a href="./terms.html">Terms of Service</a>
+      <a href="./privacy.html">Privacy Policy</a>
+    </div>
   </div>
-
-<script>
-  function getParam(name) {
-    const params = new URLSearchParams(window.location.search);
-    return params.get(name);
-  }
-
-  function makeField(id, labelText, value) {
-    const field = document.createElement("div");
-    field.className = "field";
-    const label = document.createElement("label");
-    label.textContent = labelText;
-    label.setAttribute("for", id);
-    const row = document.createElement("div");
-    row.className = "row";
-    const input = document.createElement("input");
-    input.type = "text";
-    input.id = id;
-    input.readOnly = true;
-    input.value = value;
-    const btn = document.createElement("button");
-    btn.textContent = "Copia";
-    btn.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(value);
-        btn.textContent = "Copiato!";
-        btn.classList.add("copied");
-        setTimeout(() => { btn.textContent = "Copia"; btn.classList.remove("copied"); }, 1500);
-      } catch (e) {
-        input.select();
-        document.execCommand("copy");
-      }
-    });
-    row.appendChild(input);
-    row.appendChild(btn);
-    field.appendChild(label);
-    field.appendChild(row);
-    return field;
-  }
-
-  const content = document.getElementById("content");
-  const code = getParam("code");
-  const state = getParam("state");
-  const error = getParam("error");
-  const errorDescription = getParam("error_description");
-
-  if (error) {
-    const p = document.createElement("p");
-    p.className = "error";
-    p.textContent = "Autorizzazione rifiutata: " + (errorDescription || error);
-    content.appendChild(p);
-  } else if (code) {
-    content.appendChild(makeField("code", "Codice", code));
-    if (state) {
-      content.appendChild(makeField("state", "State", state));
-    }
-  } else {
-    const p = document.createElement("p");
-    p.className = "error";
-    p.textContent = "Nessun codice trovato nell'URL.";
-    content.appendChild(p);
-  }
-</script>
 </body>
 </html>
