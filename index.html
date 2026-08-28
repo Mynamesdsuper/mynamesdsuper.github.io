@@ -3,62 +3,132 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lyra — Auto-lyrics video generator</title>
+<meta name="description" content="Lyra turns songs into audio-reactive short-form video reels with automatically synced lyrics and karaoke-style captions.">
+<title>Lyra</title>
 <style>
   :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
   body {
     margin: 0;
-    min-height: 100vh;
     background: #0f0f12;
     color: #f2f2f5;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 24px;
-    box-sizing: border-box;
+    justify-content: space-between;
+    padding: 20px 32px;
+    border-bottom: 1px solid #2a2a31;
   }
-  .card {
-    max-width: 560px;
-    width: 100%;
+  header .brand { font-weight: 700; font-size: 1.1rem; }
+  header nav a {
+    color: #b8b8c2;
+    text-decoration: none;
+    margin-left: 24px;
+    font-size: 0.9rem;
+  }
+  header nav a:hover { color: #f2f2f5; }
+  main { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  .hero { padding: 64px 0 40px; }
+  .hero h1 { font-size: 2.2rem; margin: 0 0 12px; }
+  .hero p.tagline { color: #9a9aa5; font-size: 1.15rem; margin: 0; line-height: 1.6; }
+  section { padding: 40px 0; border-top: 1px solid #2a2a31; }
+  section h2 { font-size: 1.3rem; margin: 0 0 20px; }
+  p { line-height: 1.7; color: #d8d8de; }
+  .features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; list-style: none; padding: 0; margin: 0; }
+  .features li {
     background: #1a1a1f;
     border: 1px solid #2a2a31;
-    border-radius: 16px;
-    padding: 36px;
+    border-radius: 12px;
+    padding: 18px 20px;
+    line-height: 1.55;
   }
-  h1 { font-size: 1.5rem; margin: 0 0 4px; }
-  p.tagline { color: #9a9aa5; margin: 0 0 24px; }
-  p { line-height: 1.6; }
-  ul { line-height: 1.6; padding-left: 20px; }
-  .links { margin-top: 24px; display: flex; gap: 16px; flex-wrap: wrap; }
-  .links a { color: #4f7bff; text-decoration: none; font-size: 0.9rem; }
+  .features li strong { display: block; margin-bottom: 4px; color: #f2f2f5; }
+  ol.steps { padding-left: 20px; line-height: 1.8; color: #d8d8de; }
+  .links { margin-top: 8px; display: flex; gap: 20px; flex-wrap: wrap; }
+  .links a { color: #4f7bff; text-decoration: none; font-size: 0.95rem; }
   .links a:hover { text-decoration: underline; }
+  footer {
+    padding: 32px 24px 48px;
+    text-align: center;
+    color: #6f6f79;
+    font-size: 0.85rem;
+  }
+  @media (max-width: 600px) {
+    .features { grid-template-columns: 1fr; }
+    header nav a { margin-left: 14px; }
+  }
 </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Lyra</h1>
-    <p class="tagline">Generate short-form lyric edits and post them on your socials.</p>
-    <p>
-      Lyra (project codename for ContentFarm) is a personal, locally-run desktop application
-      that turns songs into audio-reactive short-form video reels with automatically
-      generated synced lyrics (auto-lyrics) and karaoke-style captions.
-    </p>
-    <p>Main features:</p>
-    <ul>
-      <li>Automatic speech-to-text transcription and lyric syncing from an audio track</li>
-      <li>Audio-reactive animations and customizable subtitle styles</li>
-      <li>Local rendering of the final video, ready to publish</li>
-      <li>Optional TikTok account connection to streamline publishing your renders</li>
-    </ul>
-    <p>
-      Lyra runs entirely on the user's own machine. It is not a hosted multi-user web service:
-      each user runs their own local instance and connects their own TikTok account.
-    </p>
-    <div class="links">
-      <a href="./terms.html">Terms of Service</a>
-      <a href="./privacy.html">Privacy Policy</a>
+  <header>
+    <div class="brand">Lyra</div>
+    <nav>
+      <a href="#overview">Overview</a>
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="./privacy.html">Privacy</a>
+      <a href="./terms.html">Terms</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h1>Lyra</h1>
+      <p class="tagline">Turn a song into a lyric video, synced automatically, ready to publish.</p>
     </div>
-  </div>
+
+    <section id="overview">
+      <h2>Overview</h2>
+      <p>
+        Lyra is a locally-run application that turns any song into an audio-reactive
+        short-form video reel with automatically generated, precisely synced lyrics
+        (auto-lyrics) and karaoke-style captions. Drop in an audio track and a folder
+        of video clips, and Lyra transcribes the vocals, times each word to the beat,
+        and composes a finished, ready-to-share vertical video.
+      </p>
+      <p>
+        Everything runs on the user's own machine. Lyra is not a hosted, multi-tenant
+        web service — there is no central server processing your media, and each user
+        works with their own local files and, optionally, their own connected TikTok
+        account.
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>Features</h2>
+      <ul class="features">
+        <li><strong>Automatic lyric transcription</strong>Speech-to-text transcription and word-level timing extracted directly from the audio track, no manual subtitle editing required.</li>
+        <li><strong>Beat-synced clip editing</strong>Video clips are cut and sequenced automatically in time with the music's beat.</li>
+        <li><strong>Karaoke-style captions</strong>Customizable subtitle styles, colors, animations, and word-by-word highlight, with an option to render clips only, without burned-in text.</li>
+        <li><strong>Local rendering</strong>The final video is rendered entirely on the user's device and saved locally, ready to publish.</li>
+        <li><strong>Stock footage search</strong>Search and import clips directly into the local clip library to use as render material.</li>
+        <li><strong>Optional TikTok connection</strong>Securely connect a TikTok account via TikTok's official Login Kit to streamline publishing finished reels, including scheduled bulk posting.</li>
+      </ul>
+    </section>
+
+    <section id="how-it-works">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li>Import an audio track and a library of video clips.</li>
+        <li>Lyra transcribes the lyrics and times each word automatically.</li>
+        <li>Customize the caption style, or turn captions off for a clips-only render.</li>
+        <li>Render the final vertical video locally.</li>
+        <li>Optionally connect a TikTok account and publish, or schedule a batch of reels for later.</li>
+      </ol>
+    </section>
+
+    <section id="legal">
+      <h2>Privacy &amp; Terms</h2>
+      <p>Read how Lyra handles data and the terms that apply to using the application.</p>
+      <div class="links">
+        <a href="./privacy.html">Privacy Policy</a>
+        <a href="./terms.html">Terms of Service</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>Lyra — a personal, locally-run application.</footer>
 </body>
 </html>
